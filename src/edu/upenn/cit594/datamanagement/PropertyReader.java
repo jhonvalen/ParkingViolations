@@ -4,10 +4,10 @@ import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
-public class PropertyReader {
+public class ResidenceReader {
 	protected String filename;
 
-	public PropertyReader(String filename) {   
+	public ResidenceReader(String filename) {   
 		this.filename = filename;
 	}
 	
