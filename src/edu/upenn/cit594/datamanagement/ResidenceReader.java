@@ -1,9 +1,9 @@
+package edu.upenn.cit594.datamanagement;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Scanner;
 import java.util.Set;
 
 import edu.upenn.cit594.data.Residence;
