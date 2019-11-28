@@ -1,8 +1,5 @@
-
 package edu.upenn.cit594;
-
 import java.util.List;
-
 import edu.upenn.cit594.data.Violation;
 import edu.upenn.cit594.datamanagement.CSVViolationReader;
 import edu.upenn.cit594.datamanagement.JSONViolationReader;

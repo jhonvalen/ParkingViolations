@@ -3,5 +3,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry excluding="edu/upenn/cit594/datamanagement/" kind="src" path="src"/>
 	<classpathentry kind="src" path="src/edu/upenn/cit594/datamanagement"/>
+	<classpathentry kind="lib" path="C:/Users/Alexandra/Documents/04. CIT 594 Data Structures &amp; Software Design/Assignments/Group Project_Dec 9/json-simple-1.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
