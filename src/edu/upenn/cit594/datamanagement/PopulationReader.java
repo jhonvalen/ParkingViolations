@@ -1,4 +1,5 @@
 package edu.upenn.cit594.datamanagement;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.HashMap;
@@ -10,15 +11,15 @@ public class PopulationReader {
 		this.filename = filename;
 	}
 	
-	public HashMap<String, Integer> readPopulations() {
-		HashMap<String, Integer> populations = new HashMap<String, Integer>(); 
+	public HashMap<Integer, Integer> readPopulations() {
+		HashMap<Integer, Integer> populations = new HashMap<Integer, Integer>(); 
 		try {    
 		    FileReader f = new FileReader(filename);
 			BufferedReader r = new BufferedReader(f);
 			String line;
 			while ((line = r.readLine()) != null) {   
 				String [] columnData = line.split(" ");
-				String zipCode = columnData[0];  
+				int zipCode = Integer.parseInt(columnData[0]);  
 				int population = Integer.parseInt(columnData[1]);
 				populations.put(zipCode, population);
 			}

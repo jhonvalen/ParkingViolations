@@ -2,28 +2,47 @@ package edu.upenn.cit594.data;
 
 public class ZipCode {
 	
-	protected long zipCode;
-	protected long population;
-	
-	public ZipCode(long zip, long pop) {
-		this.zipCode = zip;
-		this.population = pop;		
+	protected int zipCode;
+	protected int population;
+	protected double fineAmount;
+	protected double finePerCapita;
+
+	public double getFinePerCapita() {
+		return finePerCapita;
 	}
 
-	public long getZipCode() {
+	public void setFinePerCapita(double finePerCapita) {
+		this.finePerCapita = finePerCapita;
+	}
+
+	public ZipCode(int zip, int pop, double fine) {
+		this.zipCode = zip;
+		this.population = pop;
+		this.fineAmount = fine;
+	}
+
+	public int getZipCode() {
 		return zipCode;
 	}
 
-	public void setZipCode(long zipCode) {
+	public void setZipCode(int zipCode) {
 		this.zipCode = zipCode;
 	}
 
-	public long getPopulation() {
+	public int getPopulation() {
 		return population;
 	}
 
-	public void setPopulation(long population) {
+	public void setPopulation(int population) {
 		this.population = population;
+	}
+
+	public double getFineAmount() {
+		return fineAmount;
+	}
+
+	public void setFineAmount(double fineAmount) {
+		this.fineAmount = fineAmount;
 	}
 
 }

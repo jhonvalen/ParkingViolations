@@ -7,13 +7,13 @@ public class Violation {
 	protected Date timeStamp;
 	protected double fine;
 	protected String reason;
-	protected long plateId;
-	protected long zipCode;
-	protected long violationId;
+	protected int plateId;
+	protected int zipCode;
+	protected int violationId;
 	protected String vehicleState;
 	
-	public Violation(Date timeStampParam, double fineParam, String reasonParam, long plateIdParam, 
-			long violationIdParam, String vehicleStateParam, long zipCodeParam) {
+	public Violation(Date timeStampParam, double fineParam, String reasonParam, int plateIdParam, 
+			int violationIdParam, String vehicleStateParam, int zipCodeParam) {
 		
 		this.timeStamp = timeStampParam;
 		this.fine = fineParam;
@@ -40,11 +40,11 @@ public class Violation {
 		this.reason = reason;
 	}
 
-	public long getPlateId() {
+	public int getPlateId() {
 		return plateId;
 	}
 
-	public void setPlateId(long plateId) {
+	public void setPlateId(int plateId) {
 		this.plateId = plateId;
 	}
 
@@ -56,11 +56,11 @@ public class Violation {
 		this.fine = fine;
 	}
 
-	public long getZipCode() {
+	public int getZipCode() {
 		return zipCode;
 	}
 
-	public void setZipCode(long zipCode) {
+	public void setZipCode(int zipCode) {
 		this.zipCode = zipCode;
 	}
 
@@ -68,7 +68,7 @@ public class Violation {
 		return violationId;
 	}
 
-	public void setViolationId(long violationId) {
+	public void setViolationId(int violationId) {
 		this.violationId = violationId;
 	}
 

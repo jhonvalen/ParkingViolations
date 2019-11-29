@@ -66,10 +66,10 @@ public class JSONViolationReader implements ViolationReader {
 			if (!reason.equals("") && !strPlateID.equals("") && !strFine.equals("") && !strTicketNum.equals("") &&
 					!state.equals("") && !strZip.equals("") && !strDate.equals("")) {			
 				
-				long plateID = Long.parseLong(strPlateID);
+				int plateID = Integer.parseInt(strPlateID);
 				double fine = Double.parseDouble(strFine);
-				long ticketNum = Long.parseLong(strTicketNum);
-				long zip = Long.parseLong(strZip);
+				int ticketNum = Integer.parseInt(strTicketNum);
+				int zip = Integer.parseInt(strZip);
 				Date date = null;
 				
 				// SimpleDateFormat used to convert string to Date in desired format
