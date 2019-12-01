@@ -18,6 +18,17 @@ public class ResidenceReader {
 		this.filename = filename;
 	}
 	
+	private String removeCommaBetweenQuotes(String s) {
+		int index1 = s.indexOf("\"");
+		int index2 = index1+1;
+		String first = s.substring(0, index2);
+		String remainingString = s.substring(index1 + 1);
+		int index3 = remainingString.indexOf("\"");
+		int index4= index2+index3;
+		String remainingStringWithoutComma = remainingString.substring(0,index3).replace(",", "");
+		String last = s.substring(index4, s.length());
+		return first+remainingStringWithoutComma+last;
+	}
 	
 	public Set<Residence> readResidences() {
 		Set<Residence> residences = new HashSet<Residence>(); 
@@ -49,7 +60,8 @@ public class ResidenceReader {
 			}
 			
 			while ((line = br.readLine()) != null) {
-				String [] columnData = line.split(",");
+				String lineAmended = removeCommaBetweenQuotes(line);
+				String [] columnData = lineAmended.split(",");
 				
 				String name = columnData[headers.get(objectid)];  
 				String strZipCode = columnData[headers.get(zip_code)];  
