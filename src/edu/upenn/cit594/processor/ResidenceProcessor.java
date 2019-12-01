@@ -8,24 +8,36 @@ import edu.upenn.cit594.datamanagement.ResidenceReader;
 public class ResidenceProcessor {
 	
 	protected ResidenceReader residenceReader;
+	protected PopulationProcessor populationProcessor;
 	protected Set<Residence> residences;
 	
-	public ResidenceProcessor(ResidenceReader residenceReaderParam) {
+	public ResidenceProcessor(ResidenceReader residenceReaderParam, PopulationProcessor pp) {
 		this.residenceReader = residenceReaderParam;
+		this.populationProcessor = pp;
 		this.residences = this.residenceReader.readResidences();
 	}
 	
-	public int searchResidences(ResidenceComparator rc, int zip) {
+	private int searchResidences(ResidenceNumerator rn, int zip) {
 		int numerator = 0;
-		int denominator = 0;
 		for (Residence residence : this.residences) {
 			if (residence.getResidenceZipCode() == zip) {
-				numerator += rc.getNumerator(residence);
-				denominator++;
+				numerator += rn.getNumerator(residence);
 			}
 		}
+		return numerator;
+	}
+	
+	public int residenceAvgCalculation (ResidenceNumerator rn, int zip) {
+		int numerator = this.searchResidences(rn, zip);
+		int denominator = this.searchResidences(new ResidenceCountMetric(), zip);
 		
-		return (int) numerator/denominator;
+		return (int) (numerator/denominator);
+	}
+	
+	public int mktValPerZip(int zip) {
+		int total = this.searchResidences(new MarketValueNumerator(), zip);
+		int zipPop = this.populationProcessor.singleZipPopulation(zip);
+		return total/zipPop;
 	}
 
 }

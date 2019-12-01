@@ -60,6 +60,7 @@ public class ResidenceReader {
 			}
 			
 			while ((line = br.readLine()) != null) {
+				System.out.println(line);
 				String lineAmended = removeCommaBetweenQuotes(line);
 				String [] columnData = lineAmended.split(",");
 				

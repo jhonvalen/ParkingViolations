@@ -1,7 +1,10 @@
 package edu.upenn.cit594.ui;
 
-import edu.upenn.cit594.processor.LivableAreaComparator;
-import edu.upenn.cit594.processor.MarketValueComparator;
+import java.util.TreeSet;
+
+import edu.upenn.cit594.data.ZipCode;
+import edu.upenn.cit594.processor.LivableAreaNumerator;
+import edu.upenn.cit594.processor.MarketValueNumerator;
 import edu.upenn.cit594.processor.PopulationProcessor;
 import edu.upenn.cit594.processor.ResidenceProcessor;
 import edu.upenn.cit594.processor.ViolationProcessor;
@@ -25,18 +28,22 @@ public class CommandLineUserInterface {
 				System.out.println(this.populationProcessor.totalZipPopulation());
 				break;
 			case 2:
-				System.out.println(this.violationProcessor.zipCodeFinePerCapita());
+				TreeSet<ZipCode> zipTree = this.violationProcessor.zipCodeFinePerCapita();
+				for (ZipCode zipCode : zipTree) {
+					System.out.println(zipCode.getZipCode() + " " + String.format("%.4f", zipCode.getFinePerCapita()));
+				}
 				break;
 			case 3:
-				double avgMarketValue = residenceProcessor.searchResidences(new MarketValueComparator(), 19137);
+				double avgMarketValue = residenceProcessor.residenceAvgCalculation(new MarketValueNumerator(), 19137);
 				System.out.println(avgMarketValue);
 				break;
 			case 4:
-				double avgLivingArea = residenceProcessor.searchResidences(new LivableAreaComparator(), 19137);
+				double avgLivingArea = residenceProcessor.residenceAvgCalculation(new LivableAreaNumerator(), 19137);
 				System.out.println(avgLivingArea);
 				break;
 			case 5:
-				System.out.println("user entered 5");
+				double totalResidentialPerCapita = residenceProcessor.mktValPerZip(19137);
+				System.out.println(totalResidentialPerCapita);
 				break;
 			case 6:
 				System.out.println("user entered 6");

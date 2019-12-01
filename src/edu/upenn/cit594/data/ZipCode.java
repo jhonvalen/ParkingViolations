@@ -1,19 +1,11 @@
 package edu.upenn.cit594.data;
 
-public class ZipCode {
+public class ZipCode implements Comparable<ZipCode>{
 	
 	protected int zipCode;
 	protected int population;
 	protected double fineAmount;
 	protected double finePerCapita;
-
-	public double getFinePerCapita() {
-		return finePerCapita;
-	}
-
-	public void setFinePerCapita(double finePerCapita) {
-		this.finePerCapita = finePerCapita;
-	}
 
 	public ZipCode(int zip, int pop, double fine) {
 		this.zipCode = zip;
@@ -45,4 +37,17 @@ public class ZipCode {
 		this.fineAmount = fineAmount;
 	}
 
+	@Override
+	public int compareTo(ZipCode o) {
+		return Integer.compare(this.getZipCode(), o.getZipCode());
+	}
+
+	public double getFinePerCapita() {
+		return finePerCapita;
+	}
+
+	public void setFinePerCapita(double finePerCapita) {
+		this.finePerCapita = finePerCapita;
+	}
+	
 }

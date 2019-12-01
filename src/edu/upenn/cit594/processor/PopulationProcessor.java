@@ -15,7 +15,11 @@ public class PopulationProcessor {
 	}
 	
 	public int singleZipPopulation(int zip) {
-		return this.zipPopulations.get(zip);
+		if (this.zipPopulations.containsKey(zip)) {
+			return this.zipPopulations.get(zip);
+		} else {
+			return -1;
+		}
 	}
 	
 	public int totalZipPopulation() {

@@ -8,7 +8,7 @@ import java.io.PrintWriter;
 /**
  * Logger uses the Singleton Pattern to allow the same Logger object to be used across classes
  *  
- * @author Jhon Valencia
+ * @author Jhon Valencia & Alexandra Orlander
  *
  */
 
