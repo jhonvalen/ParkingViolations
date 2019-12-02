@@ -19,15 +19,22 @@ public class ResidenceReader {
 	}
 	
 	private String removeCommaBetweenQuotes(String s) {
-		int index1 = s.indexOf("\"");
-		int index2 = index1+1;
-		String first = s.substring(0, index2);
-		String remainingString = s.substring(index1 + 1);
-		int index3 = remainingString.indexOf("\"");
-		int index4= index2+index3;
-		String remainingStringWithoutComma = remainingString.substring(0,index3).replace(",", "");
-		String last = s.substring(index4, s.length());
-		return first+remainingStringWithoutComma+last;
+		int indexFirstQuote = s.indexOf("\"");
+		if (indexFirstQuote==-1) {
+			return s;
+		}
+		String first = s.substring(0, indexFirstQuote+1);
+		String stringAfterFirstQuote = s.substring(indexFirstQuote + 1);
+		int indexSecondQuote = stringAfterFirstQuote.indexOf("\"");
+		if (indexSecondQuote==-1) {
+			return s;
+		}
+		String middle = stringAfterFirstQuote.substring(0,indexSecondQuote);
+		if (middle.contains(",")) {
+			middle = middle.replace(",", "");
+		}
+		String last = s.substring(indexFirstQuote+indexSecondQuote, s.length());
+		return first+middle+last;
 	}
 	
 	public Set<Residence> readResidences() {
@@ -60,7 +67,7 @@ public class ResidenceReader {
 			}
 			
 			while ((line = br.readLine()) != null) {
-				System.out.println(line);
+				
 				String lineAmended = removeCommaBetweenQuotes(line);
 				String [] columnData = lineAmended.split(",");
 				
