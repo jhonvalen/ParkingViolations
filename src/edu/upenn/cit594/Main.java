@@ -1,6 +1,7 @@
 
 package edu.upenn.cit594;
 
+import edu.upenn.cit594.data.Residence;
 import edu.upenn.cit594.datamanagement.CSVViolationReader;
 import edu.upenn.cit594.datamanagement.JSONViolationReader;
 import edu.upenn.cit594.datamanagement.PopulationReader;
@@ -28,7 +29,6 @@ public class Main {
 		
 		CommandLineUserInterface ui = new CommandLineUserInterface(testResProc, testPopProc, testViolProc);
 		ui.displayUserInput(5);
-		
 	}
 
 }

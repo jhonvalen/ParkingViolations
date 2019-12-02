@@ -17,38 +17,36 @@ public class ResidenceProcessor {
 		this.residences = this.residenceReader.readResidences();
 	}
 	
-	private int searchResidences(ResidenceNumerator rn, int zip) {
-		int numerator = 0;
+	private long getResidenceMetric(ResidenceMetrics rn, int zip) {
+		long metric = 0;
 		for (Residence residence : this.residences) {
 			if (residence.getResidenceZipCode() == zip) {
-				numerator += rn.getNumerator(residence);
+				metric += rn.getNumerator(residence);
 			}
 		}
-		return numerator;
+		return metric;
 	}
 	
-	//option2 for denominator - utilized in the residenceAvgCalculation method
-	private int residenceCount(int zip) {
-		int count=0;
-		for (Residence residence : this.residences) {
-			if (residence.getResidenceZipCode() == zip) {
-				count++;
-			}
+	public int residenceAvgCalculation (ResidenceMetrics rm, int zip) {
+		long numerator = this.getResidenceMetric(rm, zip);
+		long denominator = this.getResidenceMetric(new ResidenceCountMetric(), zip);
+		
+		if (numerator < 1 || denominator < 1) {
+			return 0;
 		}
-		return count;
-	}
-	
-	public int residenceAvgCalculation (ResidenceNumerator rn, int zip) {
-		int numerator = this.searchResidences(rn, zip);
-		//int denominator = this.searchResidences(new ResidenceCountMetric(), zip);
-		int denominator = residenceCount(zip);
+		
 		return (int) (numerator/denominator);
 	}
 	
-	public int mktValPerZip(int zip) {
-		int total = this.searchResidences(new MarketValueNumerator(), zip);
+	public int totalMarketValue(int zip) {
+		long total = this.getResidenceMetric(new MarketValueMetric(), zip);
 		int zipPop = this.populationProcessor.singleZipPopulation(zip);
-		return total/zipPop;
+		
+		if (total < 1 || zipPop < 1) {
+			return 0;
+		}
+		
+		return (int) (total/zipPop);
 	}
 
 }

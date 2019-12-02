@@ -1,7 +1,6 @@
 package edu.upenn.cit594.datamanagement;
 
 import java.io.BufferedReader;
-//import java.io.File;
 import java.io.FileReader;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -40,7 +39,7 @@ public class ResidenceReader {
 	public Set<Residence> readResidences() {
 		Set<Residence> residences = new HashSet<Residence>(); 
 		HashMap<String, Integer> headers = new HashMap<String, Integer>(); 
-		Pattern fiveDigits = Pattern.compile("^\\d{5}$");
+		Pattern fiveDigits = Pattern.compile("^[0-9]{5}$");
 		try {    
 			BufferedReader br = new BufferedReader(new FileReader(this.filename));
 			String line=br.readLine();
@@ -67,7 +66,6 @@ public class ResidenceReader {
 			}
 			
 			while ((line = br.readLine()) != null) {
-				
 				String lineAmended = removeCommaBetweenQuotes(line);
 				String [] columnData = lineAmended.split(",");
 				
@@ -86,8 +84,7 @@ public class ResidenceReader {
 					int livableArea = (int) Double.parseDouble(strLivableArea);
 					Residence r = new Residence(name, marketValue, livableArea, zipCode);
 					residences.add(r);
-				}
-				
+				} 				
 			}
 			
 			br.close(); 

@@ -1,10 +1,13 @@
 package edu.upenn.cit594.ui;
 
+import java.util.HashMap;
+import java.util.Scanner;
 import java.util.TreeSet;
+import java.util.regex.*;
 
 import edu.upenn.cit594.data.ZipCode;
-import edu.upenn.cit594.processor.LivableAreaNumerator;
-import edu.upenn.cit594.processor.MarketValueNumerator;
+import edu.upenn.cit594.processor.LivableAreaMetric;
+import edu.upenn.cit594.processor.MarketValueMetric;
 import edu.upenn.cit594.processor.PopulationProcessor;
 import edu.upenn.cit594.processor.ResidenceProcessor;
 import edu.upenn.cit594.processor.ViolationProcessor;
@@ -14,15 +17,21 @@ public class CommandLineUserInterface {
 	protected ResidenceProcessor residenceProcessor;
 	protected PopulationProcessor populationProcessor;
 	protected ViolationProcessor violationProcessor;
+	protected HashMap<Integer, Double> avgMarketMap;
+	protected HashMap<Integer, Double> avgLivingMap;
+	protected HashMap<Integer, Integer> totalMarketMap;
+	protected int zipInput = 0;
 	
 	public CommandLineUserInterface(ResidenceProcessor rp, PopulationProcessor pr, ViolationProcessor vp) {
 		this.residenceProcessor = rp;
 		this.populationProcessor = pr;
 		this.violationProcessor = vp;
+		this.avgMarketMap = new HashMap<Integer, Double>();
+		this.avgLivingMap = new HashMap<Integer, Double>();
+		this.totalMarketMap = new HashMap<Integer, Integer>();
 	}
 	
-	public void displayUserInput(int userInput) {
-		
+	public void displayUserInput(int userInput) {		
 		switch (userInput) {
 			case 1:
 				System.out.println(this.populationProcessor.totalZipPopulation());
@@ -34,15 +43,19 @@ public class CommandLineUserInterface {
 				}
 				break;
 			case 3:
-				double avgMarketValue = residenceProcessor.residenceAvgCalculation(new MarketValueNumerator(), 19137);
-				System.out.println(avgMarketValue);
+				this.zipInput = this.storeZipInput();
+				int avgMarketValue = residenceProcessor.residenceAvgCalculation(
+						new MarketValueMetric(), this.zipInput);
+				System.out.println(avgMarketValue);					
 				break;
 			case 4:
-				double avgLivingArea = residenceProcessor.residenceAvgCalculation(new LivableAreaNumerator(), 19137);
+				this.zipInput = this.storeZipInput();
+				int avgLivingArea = residenceProcessor.residenceAvgCalculation(new LivableAreaMetric(), this.zipInput);
 				System.out.println(avgLivingArea);
 				break;
 			case 5:
-				double totalResidentialPerCapita = residenceProcessor.mktValPerZip(19137);
+				this.zipInput = this.storeZipInput();
+				int totalResidentialPerCapita = residenceProcessor.totalMarketValue(this.zipInput);
 				System.out.println(totalResidentialPerCapita);
 				break;
 			case 6:
@@ -52,9 +65,27 @@ public class CommandLineUserInterface {
 				System.out.println("user entered invalid number");
 				break;
 		}
-			
+	}
+	
+	private int storeZipInput() {
+		Pattern zipPattern = Pattern.compile("^[0-9]{5}$");
+		System.out.println("Enter zip code (Formatted to five digits 00000):");
+		Scanner in = new Scanner(System.in);			
+		String zipInput = in.next();
+		Matcher zipMatcher = zipPattern.matcher(zipInput);	
 		
+		while (!zipMatcher.find() ) {
+			System.out.println("You have entered an incorrect zip code.\n"
+					+ "Please enter a zip code with 5 digits");
+			zipInput = in.next();
+			zipMatcher = zipPattern.matcher(zipInput);
+		}
 		
+		int zipInt = Integer.parseInt(zipInput);
+		
+		in.close();
+		
+		return zipInt;
 	}
 
 }
