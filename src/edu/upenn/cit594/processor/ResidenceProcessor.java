@@ -27,10 +27,21 @@ public class ResidenceProcessor {
 		return numerator;
 	}
 	
+	//option2 for denominator - utilized in the residenceAvgCalculation method
+	private int residenceCount(int zip) {
+		int count=0;
+		for (Residence residence : this.residences) {
+			if (residence.getResidenceZipCode() == zip) {
+				count++;
+			}
+		}
+		return count;
+	}
+	
 	public int residenceAvgCalculation (ResidenceNumerator rn, int zip) {
 		int numerator = this.searchResidences(rn, zip);
-		int denominator = this.searchResidences(new ResidenceCountMetric(), zip);
-		
+		//int denominator = this.searchResidences(new ResidenceCountMetric(), zip);
+		int denominator = residenceCount(zip);
 		return (int) (numerator/denominator);
 	}
 	
