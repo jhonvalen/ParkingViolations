@@ -18,14 +18,24 @@ public class ResidenceReader {
 	}
 	
 	private String removeCommaBetweenQuotes(String s) {
+		int countQuote = 0;
 		int indexFirstQuote = s.indexOf("\"");
 		if (indexFirstQuote==-1) {
 			return s;
+		}
+		else {
+			countQuote++;
 		}
 		String first = s.substring(0, indexFirstQuote+1);
 		String stringAfterFirstQuote = s.substring(indexFirstQuote + 1);
 		int indexSecondQuote = stringAfterFirstQuote.indexOf("\"");
 		if (indexSecondQuote==-1) {
+			return s;
+		}
+		else {
+			countQuote++;
+		}
+		if (countQuote != 2) {
 			return s;
 		}
 		String middle = stringAfterFirstQuote.substring(0,indexSecondQuote);
