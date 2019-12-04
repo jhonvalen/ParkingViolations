@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.text.SimpleDateFormat;
 import edu.upenn.cit594.data.Violation;
+import edu.upenn.cit594.logging.Logger;
 
 public class CSVViolationReader implements ViolationReader {
 	
@@ -19,6 +20,9 @@ public class CSVViolationReader implements ViolationReader {
 	}
 	
 	public List<Violation> getAllViolations() {
+		long currentTime = System.currentTimeMillis();
+		Logger.getInstance().log(currentTime + " " + this.filename);
+		
 		File file = new File(this.filename);
 		ArrayList<Violation> violations = new ArrayList<Violation>();
 		boolean exists = file.exists();

@@ -13,6 +13,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 
 import edu.upenn.cit594.data.Violation;
+import edu.upenn.cit594.logging.Logger;
 
 public class JSONViolationReader implements ViolationReader {
 	
@@ -45,6 +46,9 @@ public class JSONViolationReader implements ViolationReader {
 	}
 	
 	public List<Violation> getAllViolations() {
+		long currentTime = System.currentTimeMillis();
+		Logger.getInstance().log(currentTime + " " + this.filename);
+		
 		ArrayList<Violation> violationList = new ArrayList<Violation>();
 		JSONArray violations = readJSON();
 		

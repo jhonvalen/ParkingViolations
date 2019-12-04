@@ -9,6 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import edu.upenn.cit594.data.Residence;
+import edu.upenn.cit594.logging.Logger;
 
 public class ResidenceReader {
 	protected String filename;
@@ -43,10 +44,14 @@ public class ResidenceReader {
 			middle = middle.replace(",", "");
 		}
 		String last = s.substring(indexFirstQuote+indexSecondQuote, s.length());
+				
 		return first+middle+last;
 	}
 	
 	public Set<Residence> readResidences() {
+		long currentTime = System.currentTimeMillis();
+		Logger.getInstance().log(currentTime + " " + this.filename);
+		
 		Set<Residence> residences = new HashSet<Residence>(); 
 		HashMap<String, Integer> headers = new HashMap<String, Integer>(); 
 		Pattern fiveDigits = Pattern.compile("^[0-9]{5}$");
@@ -76,6 +81,11 @@ public class ResidenceReader {
 			}
 			
 			while ((line = br.readLine()) != null) {
+				
+//				if (line.contains("529789457")) {
+//					System.out.println("break here");
+//				}
+				
 				String lineAmended = removeCommaBetweenQuotes(line);
 				String [] columnData = lineAmended.split(",");
 				
@@ -94,7 +104,7 @@ public class ResidenceReader {
 					int livableArea = (int) Double.parseDouble(strLivableArea);
 					Residence r = new Residence(name, marketValue, livableArea, zipCode);
 					residences.add(r);
-				} 				
+				}
 			}
 			
 			br.close(); 

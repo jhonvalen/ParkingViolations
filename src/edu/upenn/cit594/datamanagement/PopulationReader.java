@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.HashMap;
 
+import edu.upenn.cit594.logging.Logger;
+
 public class PopulationReader {
 	protected String filename;
 
@@ -12,6 +14,9 @@ public class PopulationReader {
 	}
 	
 	public HashMap<Integer, Integer> readPopulations() {
+		long currentTime = System.currentTimeMillis();
+		Logger.getInstance().log(currentTime + " " + this.filename);
+		
 		HashMap<Integer, Integer> populations = new HashMap<Integer, Integer>(); 
 		try {    
 		    FileReader f = new FileReader(filename);
