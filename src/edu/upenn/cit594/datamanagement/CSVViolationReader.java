@@ -10,7 +10,7 @@ import java.util.List;
 import java.text.SimpleDateFormat;
 import edu.upenn.cit594.data.Violation;
 
-public class CSVViolationReader {
+public class CSVViolationReader implements ViolationReader {
 	
 	protected String filename;
 	
