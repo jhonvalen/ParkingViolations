@@ -5,6 +5,7 @@ import java.util.TreeSet;
 import java.util.regex.*;
 
 import edu.upenn.cit594.data.ZipCode;
+import edu.upenn.cit594.logging.Logger;
 import edu.upenn.cit594.processor.PopulationProcessor;
 import edu.upenn.cit594.processor.ResidenceProcessor;
 import edu.upenn.cit594.processor.ViolationProcessor;
@@ -65,32 +66,32 @@ public class CommandLineUserInterface {
 	}
 	
 	private int storeZipInput(Scanner in) {
+		int zipInt = 0;
 		Pattern zipPattern = Pattern.compile("^[0-9]{5}$");
 		System.out.println("Enter zip code (Formatted to five digits 00000):");
 		String zipInput = in.next();
 		Matcher zipMatcher = zipPattern.matcher(zipInput);	
+				
+		if (zipMatcher.find() ) {
+			zipInt = Integer.parseInt(zipInput);
+		} 
+				
+		long currentTime = System.currentTimeMillis();
+		Logger.getInstance().log(currentTime + " " + zipInput);
 		
-		while (!zipMatcher.find() ) {
-			System.out.println("You have entered an incorrect zip code.\n"
-					+ "Please enter a zip code with 5 digits");
-			zipInput = in.next();
-			zipMatcher = zipPattern.matcher(zipInput);
-		}
-		
-		int zipInt = Integer.parseInt(zipInput);		
 		return zipInt;
 	}
 	
-	public void displayUserInput() {		
+	public void displayUserInput() {
+		Scanner in = new Scanner(System.in);
 		while(true) {
-			Scanner in = new Scanner(System.in);
 			System.out.println("Specify what action you would like to run:\n" 
-								+ "Enter 0 to exit\n" + "Enter 1 to show the total population for all Zip Codes\n" 
-								+ "Enter 2 to show the total parking fines per capita for each Zip Code\n"
-								+ "Enter 3 to show the average market value for residences in a specified Zip Code\n"
-								+ "Enter 4 to show the average total livable area for residences in a specified Zip Code\n"
-								+ "Enter 5 to show the total residential market value per capita for a specified Zip Code\n"
-								+ "Enter 6 to show the correlation between population density and average fine amount for all Zip Codes");
+								+ "Enter '0' to exit\n" + "Enter '1' to show the total population for all Zip Codes\n" 
+								+ "Enter '2' to show the total parking fines per capita for each Zip Code\n"
+								+ "Enter '3' to show the average market value for residences in a specified Zip Code\n"
+								+ "Enter '4' to show the average total livable area for residences in a specified Zip Code\n"
+								+ "Enter '5' to show the total residential market value per capita for a specified Zip Code\n"
+								+ "Enter '6' to show the correlation between population density and average fine amount for all Zip Codes");
 			
 			if(!in.hasNextInt()) {
 				System.out.println("You have entered a value that is not an integer!" + "\n"
@@ -100,6 +101,8 @@ public class CommandLineUserInterface {
 			}
 			
 			int input = in.nextInt();
+			long currentTime = System.currentTimeMillis();
+			Logger.getInstance().log(currentTime + " " + input);
 			
 			runUserInput(input, in);
 		}
