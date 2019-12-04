@@ -22,9 +22,10 @@ public class CommandLineUserInterface {
 		this.violationProcessor = vp;
 	}
 	
-	private void runUserInput(int userInput) {		
+	private void runUserInput(int userInput, Scanner in) {		
 		switch (userInput) {
 			case 0:
+				in.close();
 				System.exit(0);
 				break;
 			case 1:
@@ -37,17 +38,17 @@ public class CommandLineUserInterface {
 				}
 				break;
 			case 3:
-				this.zipInput = this.storeZipInput();
+				this.zipInput = this.storeZipInput(in);
 				long avgMarketValue = residenceProcessor.calculateAvgMarketValue(this.zipInput);
 				System.out.println(avgMarketValue);					
 				break;
 			case 4:
-				this.zipInput = this.storeZipInput();
+				this.zipInput = this.storeZipInput(in);
 				long avgLivingArea = residenceProcessor.calculateAvgLivingArea(this.zipInput);
 				System.out.println(avgLivingArea);
 				break;
 			case 5:
-				this.zipInput = this.storeZipInput();
+				this.zipInput = this.storeZipInput(in);
 				long totalResidentialPerCapita = residenceProcessor.calculateTotalMarketValue(this.zipInput);
 				System.out.println(totalResidentialPerCapita);
 				break;
@@ -55,16 +56,17 @@ public class CommandLineUserInterface {
 				System.out.println(residenceProcessor.calculateCorrelation());
 				break;
 			default:
-				System.out.println("You have entered a value not between 0 and 6\n"
-						+ "Please enter a number between 0 and 6 to continue");
+				System.out.println("You have entered a value that is not between 0 and 6\n"
+						+ "Please enter a number between 0 and 6 to use this program");
+				in.close();
+				System.exit(0);
 				break;
 		}
 	}
 	
-	private int storeZipInput() {
+	private int storeZipInput(Scanner in) {
 		Pattern zipPattern = Pattern.compile("^[0-9]{5}$");
 		System.out.println("Enter zip code (Formatted to five digits 00000):");
-		Scanner in = new Scanner(System.in);			
 		String zipInput = in.next();
 		Matcher zipMatcher = zipPattern.matcher(zipInput);	
 		
@@ -75,17 +77,13 @@ public class CommandLineUserInterface {
 			zipMatcher = zipPattern.matcher(zipInput);
 		}
 		
-		int zipInt = Integer.parseInt(zipInput);
-		
-		in.close();
-		
+		int zipInt = Integer.parseInt(zipInput);		
 		return zipInt;
 	}
 	
-	public void displayUserInput() {
-		Scanner in = new Scanner(System.in);
-		
+	public void displayUserInput() {		
 		while(true) {
+			Scanner in = new Scanner(System.in);
 			System.out.println("Specify what action you would like to run:\n" 
 								+ "Enter 0 to exit\n" + "Enter 1 to show the total population for all Zip Codes\n" 
 								+ "Enter 2 to show the total parking fines per capita for each Zip Code\n"
@@ -93,15 +91,17 @@ public class CommandLineUserInterface {
 								+ "Enter 4 to show the average total livable area for residences in a specified Zip Code\n"
 								+ "Enter 5 to show the total residential market value per capita for a specified Zip Code\n"
 								+ "Enter 6 to show the correlation between population density and average fine amount for all Zip Codes");
+			
 			if(!in.hasNextInt()) {
 				System.out.println("You have entered a value that is not an integer!" + "\n"
 									+ "Enter a number between 0 and 6 to use this program!");
-				System.exit(0);
 				in.close();
+				System.exit(0);
 			}
 			
 			int input = in.nextInt();
-			runUserInput(input);
+			
+			runUserInput(input, in);
 		}
 				
 	}
