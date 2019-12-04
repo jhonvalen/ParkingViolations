@@ -15,8 +15,9 @@ import edu.upenn.cit594.ui.CommandLineUserInterface;
 public class Main {
 
 	public static void main(String[] args) {
-		
+
 		if(args.length == 5) {
+			long startTime = System.currentTimeMillis();
 			String violationFormat = args[0].toLowerCase().trim();
 			String violationName = args[1].toLowerCase().trim();
 			String residenceName = args[2].toLowerCase().trim();
@@ -24,6 +25,8 @@ public class Main {
 			String logName = args[4].toLowerCase().trim();			
 			
 			Logger.setFileName(logName);
+			Logger.getInstance().log(startTime + " " + violationFormat + " " + violationName
+									+ " " + residenceName + " " + populationName + " " + logName);
 			
 			ViolationReader violationReader = null;
 			if (violationFormat.equals("json")) {
