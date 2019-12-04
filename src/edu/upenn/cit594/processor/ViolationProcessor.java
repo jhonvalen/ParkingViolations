@@ -29,11 +29,11 @@ public class ViolationProcessor {
 		
  		for (Violation violation: violations) {
 			int zip = violation.getZipCode();
-			double zipFine = violation.getFine();
 			int zipPop = this.populationProcessor.singleZipPopulation(zip);
 			String plateState = violation.getVehicleState();
 			
 			if (zipPop != -1 && plateState.equalsIgnoreCase("PA")) {
+				double zipFine = violation.getFine();
 				ZipCode zipObj = new ZipCode(zip, zipPop, zipFine);
 				if (zipMap.containsKey(zip)) {
 					double fineAmount = zipMap.get(zip).getFineAmount() + zipFine;
