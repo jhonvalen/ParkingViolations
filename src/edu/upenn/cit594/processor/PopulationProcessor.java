@@ -1,13 +1,13 @@
 package edu.upenn.cit594.processor;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import edu.upenn.cit594.datamanagement.PopulationReader;
 
 public class PopulationProcessor {
 	
 	protected PopulationReader populationReader;
-	protected HashMap <Integer, Integer> zipPopulations;
+	protected Map <Integer, Integer> zipPopulations;
 	
 	public PopulationProcessor(PopulationReader populationReaderParam) {
 		this.populationReader = populationReaderParam;

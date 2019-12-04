@@ -4,6 +4,6 @@ import edu.upenn.cit594.data.Residence;
 
 public interface ResidenceMetrics {
 	
-	public int getNumerator(Residence r);
+	public int getMetric(Residence r);
 	
 }

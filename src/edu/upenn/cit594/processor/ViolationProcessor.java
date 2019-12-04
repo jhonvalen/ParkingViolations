@@ -10,12 +10,12 @@ import edu.upenn.cit594.datamanagement.ViolationReader;
 
 public class ViolationProcessor {
 	
-	protected PopulationProcessor populationProc;
+	protected PopulationProcessor populationProcessor;
 	protected ViolationReader violationReader;
 	protected List<Violation> violations;
 	
 	public ViolationProcessor(ViolationReader vr, PopulationProcessor pp) {
-		this.populationProc = pp;
+		this.populationProcessor = pp;
 		this.violationReader = vr;
 		this.violations = this.violationReader.getAllViolations();
 	}
@@ -24,13 +24,13 @@ public class ViolationProcessor {
 		return zip.getFineAmount()/zip.getPopulation();
 	}
 	
-	private HashMap<Integer, ZipCode> pairZipObjects() {
+	public HashMap<Integer, ZipCode> pairZipObjects() {
 		HashMap<Integer, ZipCode> zipMap = new HashMap<Integer, ZipCode>();
 		
  		for (Violation violation: violations) {
 			int zip = violation.getZipCode();
 			double zipFine = violation.getFine();
-			int zipPop = this.populationProc.singleZipPopulation(zip);
+			int zipPop = this.populationProcessor.singleZipPopulation(zip);
 			String plateState = violation.getVehicleState();
 			
 			if (zipPop != -1 && plateState.equalsIgnoreCase("PA")) {
@@ -46,7 +46,7 @@ public class ViolationProcessor {
 		return zipMap;
 	} 
 	
-	public TreeSet<ZipCode> zipCodeFinePerCapita () {
+	public TreeSet<ZipCode> storeZipCodestoTree () {
 		TreeSet<ZipCode> zipCodeTree = new TreeSet<ZipCode>();
 		
 		for (ZipCode zipCode : this.pairZipObjects().values()) {
@@ -69,5 +69,4 @@ public class ViolationProcessor {
 		
 		return result;
 	}
-
 }

@@ -5,7 +5,7 @@ import edu.upenn.cit594.data.Residence;
 public class MarketValueMetric implements ResidenceMetrics {
 
 	@Override
-	public int getNumerator(Residence r) {
+	public int getMetric(Residence r) {
 		return r.getResidenceMarketValue();
 	}
 	
