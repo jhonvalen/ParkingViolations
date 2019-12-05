@@ -17,6 +17,7 @@ public class ResidenceProcessor {
 	private Map<Integer, Long> avgMarketMap = new HashMap<Integer, Long>();
 	private Map<Integer, Long> avgLivingMap = new HashMap<Integer, Long>();
 	private Map<Integer, Long> totalMarketMap = new HashMap<Integer, Long>();
+	private Map<Integer, Double> correlationMap = new HashMap<Integer, Double>();
 	
 	public ResidenceProcessor(ResidenceReader residenceReaderParam, ViolationProcessor vp, PopulationProcessor pp) {
 		this.residenceReader = residenceReaderParam;
@@ -84,7 +85,7 @@ public class ResidenceProcessor {
 		return zipDenseFineMap;
 	}
 	
-	public double calculateCorrelation() {
+	private double calculateCorrelation() {
 		double sumPopulation = 0, sumFine = 0, sumBoth = 0, sqPopulation = 0, sqFine = 0;
 		int sampleSize = this.getPopDensityAvgFine().size();
 		for (Double[] zipPair : this.getPopDensityAvgFine().values()) {
@@ -136,6 +137,16 @@ public class ResidenceProcessor {
 			long totalMarketValue = this.totalMarketValue(zip);
 			totalMarketMap.put(zip, totalMarketValue);
 			return totalMarketValue;
+		}
+	}
+	
+	public double calculateFinePopulationCorrelation() {
+		if (correlationMap.containsKey(1)) {
+			return correlationMap.get(1);
+		} else {
+			double finePopCorrelation = this.calculateCorrelation();
+			correlationMap.put(1, finePopCorrelation);
+			return finePopCorrelation;
 		}
 	}
 	

@@ -13,6 +13,7 @@ public class ViolationProcessor {
 	protected PopulationProcessor populationProcessor;
 	protected ViolationReader violationReader;
 	protected List<Violation> violations;
+	protected HashMap<Integer, TreeSet<ZipCode>> zipCodeMap = new HashMap<>();
 	
 	public ViolationProcessor(ViolationReader vr, PopulationProcessor pp) {
 		this.populationProcessor = pp;
@@ -46,7 +47,7 @@ public class ViolationProcessor {
 		return zipMap;
 	} 
 	
-	public TreeSet<ZipCode> storeZipCodestoTree () {
+	private TreeSet<ZipCode> storeZipCodestoTree () {
 		TreeSet<ZipCode> zipCodeTree = new TreeSet<ZipCode>();
 		
 		for (ZipCode zipCode : this.pairZipObjects().values()) {
@@ -68,5 +69,15 @@ public class ViolationProcessor {
 		result = result/Math.pow(10, decimalPlaces);
 		
 		return result;
+	}
+	
+	public TreeSet<ZipCode> getZipCodeFines() {
+		if (zipCodeMap.containsKey(1)) {
+			return zipCodeMap.get(1);
+		} else {
+			TreeSet<ZipCode> zipTree = this.storeZipCodestoTree();
+			zipCodeMap.put(1, zipTree);
+			return zipTree;
+		}
 	}
 }
