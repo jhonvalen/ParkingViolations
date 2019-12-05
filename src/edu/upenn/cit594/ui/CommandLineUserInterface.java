@@ -30,10 +30,10 @@ public class CommandLineUserInterface {
 				System.exit(0);
 				break;
 			case 1:
-				System.out.println(this.populationProcessor.totalZipPopulation());
+				System.out.println(this.populationProcessor.calculateTotalPopulation());
 				break;
 			case 2:
-				TreeSet<ZipCode> zipTree = this.violationProcessor.storeZipCodestoTree();
+				TreeSet<ZipCode> zipTree = this.violationProcessor.getZipCodeFines();
 				for (ZipCode zipCode : zipTree) {
 					System.out.println(zipCode.getZipCode() + " " + String.format("%.4f", zipCode.getFinePerCapita()));
 				}
@@ -54,7 +54,7 @@ public class CommandLineUserInterface {
 				System.out.println(totalResidentialPerCapita);
 				break;
 			case 6:
-				System.out.println(residenceProcessor.calculateCorrelation());
+				System.out.println(residenceProcessor.calculateFinePopulationCorrelation());
 				break;
 			default:
 				System.out.println("You have entered a value that is not between 0 and 6\n"
@@ -85,8 +85,10 @@ public class CommandLineUserInterface {
 	public void displayUserInput() {
 		Scanner in = new Scanner(System.in);
 		while(true) {
+			long currentTime = System.currentTimeMillis();
 			System.out.println("Specify what action you would like to run:\n" 
-								+ "Enter '0' to exit\n" + "Enter '1' to show the total population for all Zip Codes\n" 
+								+ "Enter '0' to exit\n" 
+								+ "Enter '1' to show the total population for all Zip Codes\n" 
 								+ "Enter '2' to show the total parking fines per capita for each Zip Code\n"
 								+ "Enter '3' to show the average market value for residences in a specified Zip Code\n"
 								+ "Enter '4' to show the average total livable area for residences in a specified Zip Code\n"
@@ -94,14 +96,15 @@ public class CommandLineUserInterface {
 								+ "Enter '6' to show the correlation between population density and average fine amount for all Zip Codes");
 			
 			if(!in.hasNextInt()) {
+				String inputStr = in.next();
 				System.out.println("You have entered a value that is not an integer!" + "\n"
 									+ "Enter a number between 0 and 6 to use this program!");
+				Logger.getInstance().log(currentTime + " " + inputStr);
 				in.close();
 				System.exit(0);
 			}
 			
 			int input = in.nextInt();
-			long currentTime = System.currentTimeMillis();
 			Logger.getInstance().log(currentTime + " " + input);
 			
 			runUserInput(input, in);
