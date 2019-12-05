@@ -18,35 +18,56 @@ public class ResidenceReader {
 		this.filename = filename;
 	}
 	
-	private String removeCommaBetweenQuotes(String s) {
-		int countQuote = 0;
-		int indexFirstQuote = s.indexOf("\"");
-		if (indexFirstQuote==-1) {
-			return s;
-		}
-		else {
-			countQuote++;
-		}
-		String first = s.substring(0, indexFirstQuote+1);
-		String stringAfterFirstQuote = s.substring(indexFirstQuote + 1);
-		int indexSecondQuote = stringAfterFirstQuote.indexOf("\"");
-		if (indexSecondQuote==-1) {
-			return s;
-		}
-		else {
-			countQuote++;
-		}
-		if (countQuote != 2) {
-			return s;
-		}
-		String middle = stringAfterFirstQuote.substring(0,indexSecondQuote);
-		if (middle.contains(",")) {
-			middle = middle.replace(",", "");
-		}
-		String last = s.substring(indexFirstQuote+indexSecondQuote, s.length());
-				
-		return first+middle+last;
+	public int findNextQuote(String s, int indexFirstQuote) {
+		int indexNextQuote = s.indexOf("\"");
+		return indexNextQuote;
 	}
+	
+	public String removeCommaFromSubstring(String s) {
+		String strAdjusted = s.replace(",", "");
+		return strAdjusted;
+	}
+	
+	private String removeCommaBetweenQuotes(String s) {
+		ArrayList<String> strArray = new ArrayList<String>();
+		String remaining = s;
+		int totalLength = s.length();
+		int indexCurrent = 0;
+		HashMap<Integer, Integer> quoteIndex = new HashMap<Integer, Integer>();
+		
+		int firstQuote = s.indexOf("\"");
+		if (firstQuote==-1) {
+			return s;
+		}
+		strArray.add(s.substring(0,firstQuote));
+		indexCurrent = firstQuote;
+		int countQuote = 1;
+		
+		while (indexCurrent<totalLength) {
+			remaining = s.substring(indexCurrent+1, totalLength);
+			int nextQuote = findNextQuote(remaining, indexCurrent);
+			quoteIndex.put(indexCurrent, indexCurrent+nextQuote);
+			if (nextQuote==-1) {
+				strArray.add(remaining);
+				break;
+			}
+			countQuote++;
+			String stringBetweenQuotes = remaining.substring(0,nextQuote);	
+			if (countQuote==2) {
+				stringBetweenQuotes = removeCommaFromSubstring(stringBetweenQuotes);
+				countQuote=0;
+			}
+			strArray.add(stringBetweenQuotes);
+			indexCurrent += nextQuote+1;
+
+		}
+		String finalConcat = "";
+		for (String str : strArray) {
+			finalConcat += str;
+		}
+		return finalConcat;
+	}
+	
 	
 	public Set<Residence> readResidences() {
 		long currentTime = System.currentTimeMillis();
@@ -81,11 +102,7 @@ public class ResidenceReader {
 			}
 			
 			while ((line = br.readLine()) != null) {
-				
-//				if (line.contains("529789457")) {
-//					System.out.println("break here");
-//				}
-				
+
 				String lineAmended = removeCommaBetweenQuotes(line);
 				String [] columnData = lineAmended.split(",");
 				
