@@ -33,7 +33,6 @@ public class ResidenceReader {
 		String remaining = s;
 		int totalLength = s.length();
 		int indexCurrent = 0;
-		HashMap<Integer, Integer> quoteIndex = new HashMap<Integer, Integer>();
 		
 		int firstQuote = s.indexOf("\"");
 		if (firstQuote==-1) {
@@ -46,7 +45,7 @@ public class ResidenceReader {
 		while (indexCurrent<totalLength) {
 			remaining = s.substring(indexCurrent+1, totalLength);
 			int nextQuote = findNextQuote(remaining, indexCurrent);
-			quoteIndex.put(indexCurrent, indexCurrent+nextQuote);
+			
 			if (nextQuote==-1) {
 				strArray.add(remaining);
 				break;
