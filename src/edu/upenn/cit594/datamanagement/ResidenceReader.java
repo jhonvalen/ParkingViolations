@@ -19,16 +19,6 @@ public class ResidenceReader {
 		this.filename = filename;
 	}
 	
-	public int findNextQuote(String s, int indexFirstQuote) {
-		int indexNextQuote = s.indexOf("\"");
-		return indexNextQuote;
-	}
-	
-	public String removeCommaFromSubstring(String s) {
-		String strAdjusted = s.replace(",", "");
-		return strAdjusted;
-	}
-	
 	private String removeCommaBetweenQuotes(String s) {
 		ArrayList<String> strArray = new ArrayList<String>();
 		String remaining = s;
@@ -45,8 +35,7 @@ public class ResidenceReader {
 		
 		while (indexCurrent<totalLength) {
 			remaining = s.substring(indexCurrent+1, totalLength);
-			int nextQuote = findNextQuote(remaining, indexCurrent);
-			
+			int nextQuote = remaining.indexOf("\"");
 			if (nextQuote==-1) {
 				strArray.add(remaining);
 				break;
@@ -54,13 +43,13 @@ public class ResidenceReader {
 			countQuote++;
 			String stringBetweenQuotes = remaining.substring(0,nextQuote);	
 			if (countQuote==2) {
-				stringBetweenQuotes = removeCommaFromSubstring(stringBetweenQuotes);
+				stringBetweenQuotes = stringBetweenQuotes.replace(",", "");
 				countQuote=0;
 			}
 			strArray.add(stringBetweenQuotes);
 			indexCurrent += nextQuote+1;
-
 		}
+		
 		String finalConcat = "";
 		for (String str : strArray) {
 			finalConcat += str;
