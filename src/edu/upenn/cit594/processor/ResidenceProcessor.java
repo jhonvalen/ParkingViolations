@@ -29,7 +29,7 @@ public class ResidenceProcessor {
 	private long getResidenceMetric(ResidenceMetrics rn, int zip) {
 		long metric = 0;
 		for (Residence residence : this.residences) {
-			if (residence.getResidenceZipCode() == zip) {
+			if (residence.getZipCode() == zip) {
 				metric += rn.getMetric(residence);
 			}
 		}
