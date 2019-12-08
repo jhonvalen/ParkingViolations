@@ -6,6 +6,6 @@ public class LivableAreaMetric implements ResidenceMetrics{
 
 	@Override
 	public int getMetric(Residence r) {
-		return r.getResidenceLivableArea();
+		return r.getLivableArea();
 	}	
 }
