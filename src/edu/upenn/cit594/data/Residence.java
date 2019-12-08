@@ -2,23 +2,23 @@ package edu.upenn.cit594.data;
 
 public class Residence {
 
+	private final int marketValue;
+	private final int livableArea;
+	private final int zipCode;
+	private final String name;
 	
-	private final int residenceMarketValue;
-	private final int residenceLivableArea;
-	private final int residenceZipCode;
-	private final String residenceName;
-	
-	public Residence(String residenceName, int residenceMarketValue, int residenceLivableArea, int residenceZipCode) {
-		this.residenceName = residenceName;   
-		this.residenceMarketValue = residenceMarketValue;   
-		this.residenceLivableArea = residenceLivableArea;
-		this.residenceZipCode = residenceZipCode;
+	public Residence(String name, int marketValue, int livableArea, int zipCode) {
+		this.name = name;   
+		this.marketValue = marketValue;   
+		this.livableArea = livableArea;
+		this.zipCode = zipCode;
 	}
 	
-	public int getResidenceMarketValue() { return residenceMarketValue; }  
-	public int getResidenceLivableArea() { return residenceLivableArea; }  
-	public int getResidenceZipCode() { return residenceZipCode; }  
-	public String getResidenceName() { return residenceName; }  
+	public int getMarketValue() { return marketValue; }  
+	public int getLivableArea() { return livableArea; }  
+	public int getZipCode() { return zipCode; }  
+	public String getName() { return name; }  
 	
 	
 }
+
