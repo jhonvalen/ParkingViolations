@@ -6,7 +6,7 @@ public class MarketValueMetric implements ResidenceMetrics {
 
 	@Override
 	public int getMetric(Residence r) {
-		return r.getResidenceMarketValue();
+		return r.getMarketValue();
 	}
 	
 }
